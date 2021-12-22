@@ -24,15 +24,15 @@ Hint: you can call .querySelector on a node you've already retrieved from the DO
 
 */
 let myGallery = document.getElementsByClassName('gallery__item js-gallery-item');
-let myArr=[];
+let slideShowArr=[];
 function fillSlideShow() {
   for(let i=0; i<myGallery.length; i++) {
-    myArr.push(myGallery[i]);
+    slideShowArr.push(myGallery[i]);
   }
 }
 
 fillSlideShow()
-console.log(myArr)
+console.log(slideShowArr)
 
 /*
 
@@ -51,7 +51,9 @@ equal to the width of a single slide.
 To get the width, try .getBoundingClientRect() or .offsetWidth.
 
 */
-
+const slideCount=slideShowArr.length;
+const slideWidth=document.querySelector('li').offsetWidth;
+console.log(slideWidth);
 
 
 /*
