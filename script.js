@@ -23,8 +23,16 @@ your 'js-gallery'.
 Hint: you can call .querySelector on a node you've already retrieved from the DOM.
 
 */
+let myGallery = document.getElementsByClassName('gallery__item js-gallery-item');
+let myArr=[];
+function fillSlideShow() {
+  for(let i=0; i<myGallery.length; i++) {
+    myArr.push(myGallery[i]);
+  }
+}
 
-
+fillSlideShow()
+console.log(myArr)
 
 /*
 
