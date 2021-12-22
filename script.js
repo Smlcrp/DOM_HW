@@ -76,7 +76,10 @@ Create a function called transitionSlide that, for now, just
 `console.log`'s 'Called!' ever 5000 miliseconds
 
 */
-
+function transitionSlide() {
+  console.log('Called!')
+}
+let timer = setInterval(transitionSlide, 5000);
 
 
 /*
