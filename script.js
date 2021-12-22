@@ -23,16 +23,6 @@ your 'js-gallery'.
 Hint: you can call .querySelector on a node you've already retrieved from the DOM.
 
 */
-let myGallery = document.getElementsByClassName('gallery__item js-gallery-item');
-let slideShowArr=[];
-function fillSlideShow() {
-  for(let i=0; i<myGallery.length; i++) {
-    slideShowArr.push(myGallery[i]);
-  }
-}
-
-fillSlideShow()
-console.log(slideShowArr)
 
 /*
 
@@ -42,44 +32,39 @@ We need to know the width of every slide (they're all the same). We
 get the gallery and translate it to the left (so negative) by the
 width of one slide, every few seconds until the last one. Then at
 the last one, we translate it back to the starting point (which is
-0).
+  0).
+  
+  To start, create a variable called slideCount that is equal to the
+  number of slides and another variable called slideWidth that is
+  equal to the width of a single slide.
+  
+  To get the width, try .getBoundingClientRect() or .offsetWidth.
+  
+  */
+ 
+ 
+ 
+ /*
+ 
+ Step 3:
+ We need to set a timer to run ever 5 seconds. There are many ways to
+ set timers with JavaScript, the one we care about here is the
+ setInterval() function.
+ 
+ setInterval() takes two arguments: a reference to a function and the
+ interval in milliseconds between when setInterval should call that
+ function.
+ 
+ What's the difference between referencing and calling a function?
+ 
+ Also, it may seem counterintuitive but we want to save the result of
+ calling setInterval() to a variable.
+ 
+ Create a function called transitionSlide that, for now, just
+ `console.log`'s 'Called!' ever 5000 miliseconds
+ 
+ */
 
-To start, create a variable called slideCount that is equal to the
-number of slides and another variable called slideWidth that is
-equal to the width of a single slide.
-
-To get the width, try .getBoundingClientRect() or .offsetWidth.
-
-*/
-const slideCount=slideShowArr.length;
-const slideWidth=document.querySelector('li').offsetWidth;
-console.log(slideWidth);
-
-
-/*
-
-Step 3:
-We need to set a timer to run ever 5 seconds. There are many ways to
-set timers with JavaScript, the one we care about here is the
-setInterval() function.
-
-setInterval() takes two arguments: a reference to a function and the
-interval in milliseconds between when setInterval should call that
-function.
-
-What's the difference between referencing and calling a function?
-
-Also, it may seem counterintuitive but we want to save the result of
-calling setInterval() to a variable.
-
-Create a function called transitionSlide that, for now, just
-`console.log`'s 'Called!' ever 5000 miliseconds
-
-*/
-function transitionSlide() {
-  console.log('Called!')
-}
-let timer = setInterval(transitionSlide, 5000);
 
 
 /*
@@ -92,15 +77,49 @@ Declare a variable called currentSlide and set it equal to 1.
 
 Inside transitionSlide() we need to do two things:
 1. We need to create an if/else statement where:
-  (a) IF currentSlide is less than slideCount we do the following:
-    - take our gallery and change it's transform style property so
-    that it's equal to translateX( delta ), where delta is the width
-    of a single slide times the value of currentSlide.
-    - increment currentSlide
-  (b) ELSE:
-    - set the transform style property so that translateX() is 0
-    - set currentSlide back to 1
+(a) IF currentSlide is less than slideCount we do the following:
+- take our gallery and change it's transform style property so
+that it's equal to translateX( delta ), where delta is the width
+of a single slide times the value of currentSlide.
+- increment currentSlide
+(b) ELSE:
+- set the transform style property so that translateX() is 0
+- set currentSlide back to 1
 
 Hint: delta should always be a negative number
 
 */
+//Step 1:
+let gallery = document.querySelector('.js-gallery');
+let arr = document.querySelectorAll('.js-gallery-item');
+
+console.log(gallery.classList);
+console.log(arr);
+
+//Step 2:
+let myWidths = [];
+arr.forEach(function (item) {
+  let getBound = item.getBoundingClientRect();
+  myWidths.push(getBound.width)
+})
+
+console.log(myWidths);
+
+//Step 3 & 4:
+const slideCount=arr.length;
+
+let timer = setInterval(transitionSlide, 1000);
+
+let currentSlide = 0;
+function transitionSlide() {
+  if(currentSlide < slideCount) {
+    gallery.style.transform = `translateX(-${myWidths[0] * currentSlide}px)`;
+    console.log(myWidths[0] * currentSlide)
+    currentSlide++;
+  } else {
+    currentSlide = 0;
+    gallery.style.transform = `translateX(0px)`;
+    
+  } 
+}
+transitionSlide()
